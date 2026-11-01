@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Make Me a Hanzi - Chinese Stroke Order & Handwriting Recognition</title>
+  <meta name="description" content="Interactive Chinese character stroke-order vector animations, handwriting drawing search, decomposition trees, and dictionary lookup.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Header / Navbar -->
+  <header class="app-navbar">
+    <div class="brand-section">
+      <a href="#/" class="brand-title">
+        <span>Make Me a Hanzi</span>
+        <span class="brand-badge">9,000+ Glyphs</span>
+      </a>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Search Input -->
+      <div class="search-box">
+        <input type="text" id="input-quick-search" placeholder="Type Hanzi, Pinyin..." autocomplete="off">
+        <button id="btn-quick-search" title="Search">🔍</button>
+      </div>
+
+      <!-- Back / Drawing Navigation button -->
+      <a href="#/" id="nav-back-btn" class="btn-nav hidden" title="Back to Drawing Pad">
+        <span>✍️ Draw</span>
+      </a>
+
+      <!-- Home Link -->
+      <a href="/" class="btn-nav" title="Back to minglu.us">
+        <span>minglu.us ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-main">
+
+    <!-- 1. Search / Drawing View -->
+    <div id="view-search" class="view">
+      <div class="search-container">
+        <div class="search-hero">
+          <h2>Draw a Chinese Character</h2>
+          <p>Draw strokes in the red guide box below. The engine dynamically matches your handwriting against 9,500+ Chinese characters in real time!</p>
+        </div>
+
+        <div class="canvas-panel">
+          <div class="canvas-wrapper">
+            <canvas id="handwriting-canvas"></canvas>
+          </div>
+
+          <div class="canvas-controls">
+            <span id="stroke-count-display" class="stroke-badge">0 strokes</span>
+            <div class="btn-group">
+              <button id="btn-undo" class="btn-action">↩ Undo</button>
+              <button id="btn-clear" class="btn-action btn-danger">✕ Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Candidates List -->
+        <div class="candidates-section">
+          <div class="candidates-header">Suggested Characters (click to inspect)</div>
+          <div id="candidates-list" class="candidates-list">
+            <span class="empty-hint">Draw a Chinese character stroke by stroke above</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Character Detail View -->
+    <div id="view-character" class="view hidden">
+      <div class="character-layout">
+
+        <!-- Left Column: Stroke Animator -->
+        <div class="animator-panel">
+          <div class="svg-container">
+            <svg id="svg-order" viewBox="0 0 1024 1024"></svg>
+          </div>
+
+          <div class="anim-controls">
+            <div class="anim-buttons">
+              <button id="btn-anim-prev" class="btn-action" title="Previous Stroke">⏮</button>
+              <button id="btn-anim-play" class="btn-action" style="min-width: 90px;">⏸ Pause</button>
+              <button id="btn-anim-next" class="btn-action" title="Next Stroke">⏭</button>
+              <button id="btn-anim-restart" class="btn-action" title="Restart Animation">🔄</button>
+            </div>
+
+            <div class="anim-meta-bar">
+              <span id="anim-status">0 / 0 strokes</span>
+              <label>
+                Speed:
+                <select id="anim-speed">
+                  <option value="0.5">0.5x</option>
+                  <option value="1.0" selected>1.0x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2.0">2.0x</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Character Metadata & Decomposition Tree -->
+        <div class="details-panel">
+          <!-- Metadata Card -->
+          <div class="metadata-card">
+            <div class="char-hero">
+              <div id="char-display" class="char-glyph">字</div>
+              <div class="char-sub">
+                <span id="char-pinyin" class="pinyin-badge">zì</span>
+                <span id="char-radical" class="radical-badge">Radical: 宀</span>
+                <span id="char-strokes" class="radical-badge">6 strokes</span>
+              </div>
+            </div>
+
+            <div class="info-grid">
+              <div class="info-row">
+                <span class="info-label">Definition</span>
+                <p id="char-definition" class="info-value">letter, character, word</p>
+              </div>
+
+              <div id="formation-container" class="info-row hidden">
+                <span class="info-label">Etymology & Formation</span>
+                <p id="char-formation" class="info-value">-</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decomposition Tree Card -->
+          <div class="metadata-card">
+            <div class="info-row">
+              <span class="info-label">Structural Decomposition (IDS)</span>
+              <div id="decomposition-tree" style="margin-top: 0.5rem;"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Global Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading 9,500+ Chinese character stroke index...</div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>
+      Recreated from <a href="https://github.com/skishore/makemeahanzi" target="_blank" rel="noopener">Make Me a Hanzi</a> 
+      by Shaunak Kishore. Vector strokes derived from Arphic PL Fonts under APL license.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
