@@ -2,6 +2,10 @@ baseURL = '/'
 languageCode = 'en-us'
 theme = "terminal"
 title = 'MINGLU.US'
+pagination.pagerSize = 5
+
+[markup.goldmark.renderer]
+  unsafe = true
 
 [params]
   # dir name of your main content (default is `content/posts`).
